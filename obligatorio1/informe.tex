@@ -134,8 +134,31 @@ Gv = \lambda v
 (G-\lambda)v = 0
 \end{equation}
 
+
+
 \begin{description}
-\item[Método de Arnoldi] El método Arnoldi puede ser usado para encontrar todos los valores y vectores propios de una matriz, pertenece a la clase de algoritmos de álgebra lineal que producen un resultado parcial después de un número relativamente bajo de iteraciones. El algoritmo fue creado en principio para tranformar una matriz en forma Hassenberg \footnote{An upper Hessenberg matrix has zero entries below the first subdiagonal.} superior, pero se encontró más adelante que el método podía ser usado para encontrar valores y vectores propios para matrices esparsas de gran tamaño de forma iterativa. Inicialmente el método construye bases del subespacio Krylov\footnote{A Krylov subspace is defined as $K(A, q, j) = span(q, Aq, A^{2}q,...,A^{j-1}q)$.}, después de construido el subespacio, com $m$ elegido como cantidad de bases, podemos calcular aproximaciones a los valores y vectores propios de la matriz esparsa original.
+\item[Subespacio Krylov] Un subespacio de Krylov de orden $r$ generado por una matriz $A \in M_{NxN}$ y un vector $v$, es el subespacio vectorial generado por $A^{k}v$ con $k < r$:
+\begin{equation} \label{eq:KY}
+K_{r}(A,v) = span(v,Av,\ldots,A^{r-1}v)
+\end{equation}
+
+\item[Matriz de Hassenberg superior] Una matriz de Hassenberg superior tiene todos ceros por debajo de la primera subdiagonal.
+
+ 
+\item[Método de Arnoldi] El método Arnoldi puede ser usado para encontrar todos los valores y vectores propios de la matriz $G \in M_{NxN}$, pertenece a la clase de algoritmos de álgebra lineal que producen un resultado parcial después de un número relativamente bajo de iteraciones. El algoritmo fue creado en principio para tranformar una matriz en forma Hassenberg superior, pero se encontró más adelante que el método podía ser usado para encontrar valores y vectores propios para matrices esparsas de gran tamaño de forma iterativa. Inicialmente el método construye bases del subespacio Krylov, después de construido el subespacio, con $m$ elegido como cantidad de bases, podemos calcular aproximaciones a los valores y vectores propios de la matriz esparsa original $G$. La matriz de Hassenberg $H \in M_{NxN}$ resultante del método es la clave para calcular esas aproximaciones ya que sus valores propios asociados $\lambda _{i}^{(m)}$ conocidos como \textit{Valores de Ritz} convergerán hacia los valores propios de la matriz esparsa de gran tamaño $A$.
+
+Los vectores propios de la matriz de Google $G$ pueden calcularse como sigue:
+
+\begin{enumerate}
+  \item Calcular el valor propio de interés de $H$
+  \item Obtener el vector propio asociado a ese valor propio.
+  \item El vector correspondiente de $G$ se obtiene por:
+  \begin{equation} \label{eq:SL}
+	v_{i}^{(m)} = V_{m}y_{i}^{(m)}
+\end{equation}
+donde $v_{i}^{(m)}$ es el vector buscado en $G$, $V_{m}$ es el vector con bases del subespacio de Krylov y $y_{i}^{(m)}$ es el vector propio de $H$ asociado al valor propio de interés.   
+  
+\end{enumerate}
 
 
 
