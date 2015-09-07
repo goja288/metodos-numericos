@@ -1,0 +1,181 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements 
+\usepackage[utf8]{inputenc}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Determination of the Atomic \\ Weight of Magnesium \\ CHEM 101} % Title
+
+\author{John \textsc{Smith}} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+\begin{center}
+\begin{tabular}{l r}
+Date Performed: & January 1, 2012 \\ % Date the experiment was performed
+Partners: & James Smith \\ % Partner names
+& Mary Smith \\
+Instructor: & Professor Smith % Instructor/supervisor
+\end{tabular}
+\end{center}
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Fundamentos}
+
+
+
+\subsection{Matriz de Google}
+\label{definitions}
+
+Se llama Matriz de Google a una matriz estocástica particular utilizada por el algoritmo PageRank del buscador Google.
+PageRank cuenta la cantidad y calidad de enlaces hacia una página para estimar la importancia de una página web, la hipótesis más importante es que las páginas más importantes probablemente tengan mayor cantidad de enlaces hacia ellas.
+La matriz de Google representa un grafo, donde los nodos son páginas web y las aristas son links entre páginas. El PageRank de cada página puede ser calculado iterativamente a partir de la matriz de Google usando por ejemplo el método de las potencias, para que el método converja la matriz debe ser estocástica, irreducible y aperiódica. 
+\begin{description}
+\item[Matriz de Adyacencias]
+
+Sea $N$ la cantidad de páginas, se define $A$ matriz de adyacencias que representa la relación entre enlaces como sigue:
+
+\begin{equation} \label{eq:A}
+A_{i,j} =
+\left\{
+	\begin{array}{ll}
+		1  & \mbox{si $j$ tiene un enlace hacia $i$}\\
+		0 & \mbox{en otro caso } 
+	\end{array}
+\right.
+\end{equation}
+
+\item[Matriz de Markov]
+A partir de $A$ se construye una matriz $S$ que correspondiente a las trancisiones en una cadena de Markov. Sea $k_j$ el número de enlaces salientes del nodo $i$ a todos los demás nodos:
+
+\begin{equation} \label{eq:S}
+S_{i,j} =
+\left\{
+	\begin{array}{ll}
+		A_{i,j}/k_{j}  & \mbox{si $j$ tiene un enlace hacia $i$}\\
+		0 & \mbox{en otro caso } 
+	\end{array}
+\right.
+\end{equation}
+
+Aquellas columnas $j$ cuyos valores son todos cero representan nodos sin enlaces salientes, dichos vectores son reemplazados por otro cuyos valores sean $\dfrac {1} {N}$.
+Por construcción la suma de todos los elementos de cada columna $j$ es la unidad, por lo tanto $S$ está bien definida, pertenece a la clase de Cadenas de Markov y a la clase de operadores de Perron-Frobenius.
+
+\item[Matriz de Google]
+
+Se puede definir la matriz de Google como sigue:
+
+\begin{equation} \label{eq:G}
+G_{i,j} = \alpha S_{i,j} + (1-\alpha) \dfrac {1} {N}
+\end{equation}
+
+\end{description} 
+ 
+%----------------------------------------------------------------------------------------
+%	SECTION 2
+%----------------------------------------------------------------------------------------
+
+\section{Puntuación de Sitios Web}
+
+\subsection{1}
+\subsection{Sistema lineal de ecuaciones}
+\begin{equation} \label{eq:SLi}
+Gv = \lambda v
+\end{equation}
+\begin{equation} \label{eq:SL}
+(G-\lambda)v = 0
+\end{equation}
+
+\begin{description}
+\item[Método de Arnoldi] El método Arnoldi puede ser usado para encontrar todos los valores y vectores propios de una matriz, pertenece a la clase de algoritmos de álgebra lineal que producen un resultado parcial después de un número relativamente bajo de iteraciones. El algoritmo fue creado en principio para tranformar una matriz en forma Hassenberg \footnote{An upper Hessenberg matrix has zero entries below the first subdiagonal.} superior, pero se encontró más adelante que el método podía ser usado para encontrar valores y vectores propios para matrices esparsas de gran tamaño de forma iterativa. Inicialmente el método construye bases del subespacio Krylov\footnote{A Krylov subspace is defined as $K(A, q, j) = span(q, Aq, A^{2}q,...,A^{j-1}q)$.}, después de construido el subespacio, com $m$ elegido como cantidad de bases, podemos calcular aproximaciones a los valores y vectores propios de la matriz esparsa original.
+
+
+
+\end{description}
+
+\begin{algorithm}
+\caption{Método Arnoldi}\label{alg:arnoldi}
+\begin{algorithmic}[1]
+\Procedure{Arnoldi}{}
+\State $v_{0} = $ arbitrary nonzero starting vector
+\State $v_{1} = v_{0}/\|v_{0}\|_{2}$ 
+\For{$j=1,2...$}
+\State $w = Av_{j}$
+\For{$j=1:j$}
+\State $h_{ij} = w*v_{i}$
+\State $w = w - h_{ij}v_{i}$
+\EndFor
+\State $h_{j+1,j} = \|w\|_{2}$
+\If{$h_{j+1,j} = 0$}
+stop
+\EndIf
+\State $v_{j+1} = w/h_{j+1,j}$
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+\subsection{Programas}
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\bibliographystyle{apalike}
+
+\bibliography{sample}
+
+%----------------------------------------------------------------------------------------
+
+
+\end{document}
