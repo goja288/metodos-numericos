@@ -6,8 +6,6 @@ function [autoVector,autoValor]=Potencia(A,v)
 	iter = 0; % Numero de iteracion	
 	tolerancia = 10^-5; % Tolerancia
  
-	diferencia = 1; % Variable auxiliar para comprar con la tolerancia
-
 	autoValor = 0;
 	autoValorAnterior = -1;
 
@@ -15,24 +13,22 @@ function [autoVector,autoValor]=Potencia(A,v)
 	y = x / norm(x); % Normalizo
 
 	% Si la cantidad de iteraciones no supero el maximo y la diferencia
-	% dos valores consecutivos es mayor a la tolerancia
-	while (iter < maxIteraciones && diferencia > tolerancia) 
+	% de dos valores consecutivos es mayor a la tolerancia
+	while (iter < maxIteraciones && abs(autoValor-autoValorAnterior) > tolerancia) 
+		
+		autoValorAnterior = autoValor; % lo guardo para la proxima iteracion
 		
 		x = A*y; % x^(k) = Ax^(k-1)
 		y = x / norm(x);
 		
 		autoValor = x.'*y; % Calculo el autovector - con .' traspongo
-		
-		diferencia = abs(autoValor-autoValorAnterior);
-		autoValorAnterior = autoValor; % lo guardo para la proxima iteracion
 
 		iter++; 
 	
 	end
-	
-	
+
 	autoVector = y; % Normalizado
-%	autoVector = x
+
 end
 
 
