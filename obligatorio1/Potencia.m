@@ -6,28 +6,29 @@ function [autoVector,autoValor]=Potencia(A,v)
 	iter = 0; % Numero de iteracion	
 	tolerancia = 10^-5; % Tolerancia
  
-	autoValor = 0;
+	c = 0; % AutoValor
 	autoValorAnterior = -1;
 
 	x = v(:); % Paso el vector x0 como columna
-	y = x / norm(x); % Normalizo
-
+	
 	% Si la cantidad de iteraciones no supero el maximo y la diferencia
 	% de dos valores consecutivos es mayor a la tolerancia
-	while (iter < maxIteraciones && abs(autoValor-autoValorAnterior) > tolerancia) 
+	while (iter < maxIteraciones && abs(c-autoValorAnterior) > tolerancia) 
 		
-		autoValorAnterior = autoValor; % lo guardo para la proxima iteracion
+		autoValorAnterior = c; % lo guardo para la proxima iteracion
 		
-		x = A*y; % x^(k) = Ax^(k-1)
-		y = x / norm(x);
+		y = A*x; % y^{(j+1)} = Ax^{(j)}
 		
-		autoValor = x.'*y; % Calculo el autovector - con .' traspongo
+		c = abs(max(y));  % Componente dominante de y^{(j+1)
+		
+		x = (1 / c) * y; % Normalizado de y^{(j+1)
 
 		iter++; 
 	
 	end
 
-	autoVector = y; % Normalizado
+	autoValor = c;
+	autoVector = x; % Normalizado
 
 end
 
