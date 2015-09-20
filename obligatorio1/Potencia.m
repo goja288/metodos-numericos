@@ -22,9 +22,9 @@ function [autoVector,autoValor]=Potencia(A)
 		
 		y = A*x; % y^{(j+1)} = Ax^{(j)}
 		
-		c = abs(max(y));  % Componente dominante de y^{(j+1)
+		c = abs(max(y));  % Componente dominante de y^{(j+1)}
 		
-		x = (1 / c) * y; % Normalizado de y^{(j+1)
+		x = (1 / c) * y; % Normalizado de y^{(j+1)}
 
 		iter++; 
 	
