@@ -1,9 +1,11 @@
 function [autoVector,autoValor]=Potencia(A) 
-% param A matriz
+% param A matriz 
 
-	x0 = linspace(1,1,columns(A)); % Inicializo x^{x0} con 1's
+	%x0 = linspace(1,1,columns(A)); 
+	x0 = zeros(1,columns(A)); % Inicializo x^{x0} con 0's
+	x0(1) = 1; % le asigno un 1 a la primer componente
 
-	maxIteraciones = 100; % Maxima cantidad de iteraciones
+	maxIteraciones = 100; % Maxima cantidad de iteraciones 
 	iter = 0; % Numero de iteracion	
 	tolerancia = 10^-5; % Tolerancia
  
@@ -14,7 +16,7 @@ function [autoVector,autoValor]=Potencia(A)
 	
 	% Si la cantidad de iteraciones no supero el maximo y la diferencia
 	% de dos valores consecutivos es mayor a la tolerancia
-	while (iter < maxIteraciones && abs(c-autoValorAnterior) > tolerancia) 
+	while (iter < maxIteraciones && abs(c-autoValorAnterior) > tolerancia) % TODO Ver si no es comparacion entre vectores
 		
 		autoValorAnterior = c; % lo guardo para la proxima iteracion
 		
