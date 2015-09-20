@@ -1,6 +1,7 @@
-function [autoVector,autoValor]=Potencia(A,v) 
+function [autoVector,autoValor]=Potencia(A) 
 % param A matriz
-% param v vector
+
+	x0 = linspace(1,1,columns(A)); % Inicializo x^{x0} con 1's
 
 	maxIteraciones = 100; % Maxima cantidad de iteraciones
 	iter = 0; % Numero de iteracion	
@@ -9,7 +10,7 @@ function [autoVector,autoValor]=Potencia(A,v)
 	c = 0; % AutoValor
 	autoValorAnterior = -1;
 
-	x = v(:); % Paso el vector x0 como columna
+	x = x0(:); % Paso el vector x^{x0} como columna
 	
 	% Si la cantidad de iteraciones no supero el maximo y la diferencia
 	% de dos valores consecutivos es mayor a la tolerancia
