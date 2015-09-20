@@ -6,7 +6,7 @@ function [V,h,res,I] = BaseArnoldi(A,max_bases,alpha,tol,d)
 	#vector base inicial de n unos/n
 	V = ones(n,1)/n;
 	#vector base inicial normalizado
-	V = V/norm(V,2)
+	V = V/norm(V,2);
 	#iteracion
 	for(j=1:max_bases)
 		#Calculo proximo vector base

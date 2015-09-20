@@ -1,4 +1,4 @@
-function [ch,rh,x,res,I] = ArnoldiPageRank(A,max_bases,alpha,tol)
+function [ch,rh,x,res,I,eigval] = ArnoldiPageRank(A,max_bases,alpha,tol)
 	disp('Arnoldi Page Rank');
 
 	#chequear columnas vacias
