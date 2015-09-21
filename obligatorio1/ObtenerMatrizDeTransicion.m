@@ -9,15 +9,21 @@ numeroFilas = size(G,2);
 
 % A = G./vectorSinCeros; % ./ es division elemento a elemento
 
+
 for j = 1:numeroColumnas
 	%j
 	if (vectorSumaColumnas(j) == 0) 
-		A(:,j) = (linspace(1/numeroColumnas,1/numeroColumnas,numeroFilas)).'; 
+		A(:,j) = (linspace(1/numeroColumnas,1/numeroColumnas,numeroFilas))'; 
 	else
 		A(:,j) = G(:,j) / vectorSumaColumnas(j); % no tiene 0 porque entra antes 
 	end
-		
-end 
+end
+
+v = (1/numeroColumnas);
+e = ones(1,numeroColumnas);
+A = (0.85) * A + (0.15) * v * e'*e;
+
+%sum(A) 
 
 
 
