@@ -4,6 +4,7 @@ vectorSumaColumnas = sum(G);
 %vectorSinCeros = vectorSumaColumnas;
 numeroColumnas = size(G,1);
 numeroFilas = size(G,2);
+[numeroColumnas,numeroFilas] = size(G) ;
 
 %vectorSinCeros(vectorSinCeros == 0) = 1; % para poder dividir sustituyo los 0's
 
