@@ -5,7 +5,7 @@ function Comparacion()
 	HARV = G;
 	load("matrices/wb-cs-stanford.mat");
 	STANFORD = Problem.A; 
-	X = [0 0 1 0; 1 0 1 0; 0 0 0 1; 1 0 1 0];
+	X = createMatrix(50);
 
 	disp("POTENCIA vs ARNOLDI\n");
 	set(0, 'defaultfigurevisible', 'off');
@@ -29,6 +29,11 @@ function Comparacion()
 	plot(errores,";Error vs Iteracion X;");
 	print('ErrorVsIteracionArnoldi-X','-dpng');
 
+	disp("PAGERANKPOW X: ");
+	[autoVector,iter] = pagerankpow(X);
+	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
+
 
 	disp("POTENCIA HARVARD: ");
 	[autoVector,autoValor,errores,iter] = Potencia2(HARV, maxIteraciones,alpha,tolerancia);
@@ -43,6 +48,11 @@ function Comparacion()
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
 	plot(errores,";Error vs Iteracion ARNOLDI;");
 	print('ErrorVsIteracionArnoldi-Harvard','-dpng');
+
+	disp("PAGERANKPOW HARVARD: ");
+	[autoVector,iter] = pagerankpow(HARV);
+	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
 
 
 	disp("POTENCIA STANFORD: ");
@@ -59,6 +69,11 @@ function Comparacion()
 	plot(errores,";Error vs Iteracion ARNOLDI;");
 	print('ErrorVsIteracionArnoldi-Stanford','-dpng');
 
+	disp("PAGERANKPOW HARVARD: ");
+	[autoVector,iter] = pagerankpow(STANFORD);
+	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
+
 
 	
 
@@ -66,4 +81,23 @@ function Comparacion()
 	#plot(erroresSistema,";errores Sistemas;");
 endfunction
 
-
+function [A] = createMatrix(dim)
+#crear matriz esparsa de dim*dim
+	A = sparse(dim,dim);
+	maxnel = min(16,dim);
+	for i = 1:dim
+		nel = floor(rand(1)*maxnel);
+		if(nel == 0)
+			val = 0;
+		else
+			val = 1/nel;
+		end
+		for j = 1:nel
+			col_ind = ceil(rand(1)*dim);
+			while(A(col_ind,i) ~= 0)
+				col_ind = ceil(rand(1)*dim);
+			end
+			A(col_ind,i) = val;
+		end
+	end
+endfunction
