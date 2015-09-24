@@ -1,11 +1,9 @@
-function [ch,rh,x,res,I,eigval] = Sistema(A,max_bases,alpha,tol)
-	disp('Arnoldi Page Rank');
-
+function [autoVector,autoValor,errores,iter] = Sistema(A,max_bases,alpha,tol)
 	#chequear columnas vacias
 	d = columnasVacias(A);
 
 	#crear bases
-	[V,H,res,I] = BaseArnoldi(A,max_bases,alpha,tol,d);
+	[V,H,errores,I] = BaseArnoldi(A,max_bases,alpha,tol,d);
 
 	#busco vector y valor propio de H.
 	#uso eig porque H es chica, aun cuando A es grande.
@@ -28,7 +26,9 @@ function [ch,rh,x,res,I,eigval] = Sistema(A,max_bases,alpha,tol)
 	#si negativo
 	if (eigvec(1)<0) eigvec = abs(eigvec); end
 
-	x = eigvec; 
+	autoVector = eigvec; 
+	autoValor = eigval;
+	iter = I;
 endfunction
 
 %%%%%%%%%%%%%%%%%%
@@ -36,6 +36,8 @@ endfunction
 %%%%%%%%%%%%%%%%%%
 
 function [V,h,res,I] = BaseArnoldi(A,max_bases,alpha,tol,d)
+	#vector residuos
+	res = zeros(1,max_bases+1);
 	#tamano de primer columna de A
 	n = size(A,1);
 	#matriz sparsa de max_bases+1 * max_bases+1
@@ -60,7 +62,6 @@ function [V,h,res,I] = BaseArnoldi(A,max_bases,alpha,tol,d)
 		h(j+1,j)=norm(w,2);
 	
 		if h(j+1,j) < 1e-12
-			fprintf(1,'w has \"vanished": %g',h(j+1,j))
 			break
 		end
 		#para la proxima iteracion
@@ -72,14 +73,13 @@ function [V,h,res,I] = BaseArnoldi(A,max_bases,alpha,tol,d)
 		[tmp ind] = max(diag(EVAL));
 		cheapres = h(j+1,j)*abs(EVEC(j,ind));
 	
-		fprintf(1,'iter:%d res=%g \t(tol=%g)\n',j,cheapres,tol)
+		%fprintf(1,'iter:%d res=%g \t(tol=%g)\n',j,cheapres,tol)
 		#condicion de parada
 		if cheapres < tol;
 			break
 		end
+		res(j) = cheapres;
 	end
-	#devolver el residuo
-	res  = cheapres;
 
 	I = j;
 	if j == max_bases
