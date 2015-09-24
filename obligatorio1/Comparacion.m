@@ -22,6 +22,13 @@ function Comparacion()
 	plot(errores,";Error vs Iteracion X;");
 	print('ErrorVsIteracionPotencia-X','-dpng');
 
+	disp("POTENCIA OLD X: ");
+	G = ObtenerMatrizDeTransicion(X);
+	[autoVector,autoValor,errores,iter] = Potencia(G, maxIteraciones,tolerancia);
+	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	
+
 	disp("ARNOLDI X: ");
 	[autoVector,autoValor,errores,iter] = Sistema(X, maxIteraciones,alpha,tolerancia);
 	[probabilidad indice] = max(autoVector);
@@ -41,6 +48,12 @@ function Comparacion()
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
 	plot(errores,";Error vs Iteracion POTENCIA;");
 	print('ErrorVsIteracionPotencia-Harvard','-dpng');
+
+	disp("POTENCIA OLD HARVARD: ");
+	G = ObtenerMatrizDeTransicion(HARV);
+	[autoVector,autoValor,errores,iter] = Potencia(G, maxIteraciones,tolerancia);
+	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
 
 	disp("ARNOLDI HARVARD: ");
 	[autoVector,autoValor,errores,iter] = Sistema(HARV, maxIteraciones,alpha,tolerancia);
@@ -62,6 +75,13 @@ function Comparacion()
 	plot(errores,";Error vs Iteracion POTENCIA;");
 	print('ErrorVsIteracionPotencia-Stanford','-dpng');
 
+	disp("POTENCIA OLD STANFORD: ");
+	G = ObtenerMatrizDeTransicion(STANFORD);
+	[autoVector,autoValor,errores,iter] = Potencia(G, maxIteraciones,tolerancia);
+	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+
+
 	disp("ARNOLDI STANFORD: ");
 	[autoVector,autoValor,errores,iter] = Sistema(STANFORD, maxIteraciones,alpha,tolerancia);
 	[probabilidad indice] = max(autoVector);
@@ -69,7 +89,7 @@ function Comparacion()
 	plot(errores,";Error vs Iteracion ARNOLDI;");
 	print('ErrorVsIteracionArnoldi-Stanford','-dpng');
 
-	disp("PAGERANKPOW HARVARD: ");
+	disp("PAGERANKPOW STANFORD: ");
 	[autoVector,iter] = pagerankpow(STANFORD);
 	[probabilidad indice] = max(autoVector);
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
@@ -81,8 +101,8 @@ function Comparacion()
 	#plot(erroresSistema,";errores Sistemas;");
 endfunction
 
-function [A] = createMatrix(dim)
 #crear matriz esparsa de dim*dim
+function [A] = createMatrix(dim)
 	A = sparse(dim,dim);
 	maxnel = min(16,dim);
 	for i = 1:dim
