@@ -14,25 +14,18 @@ function Comparacion()
 	tolerancia = 10^-20;
 	alpha = 0.85;
 
-
+	disp("################### X ########################\n\n");
 	disp("POTENCIA X: ");
-	[autoVector,autoValor,errores,iter] = Potencia2(X, maxIteraciones,alpha,tolerancia);
+	[autoVector,autoValor,errores,iter] = Potencia(X, maxIteraciones,tolerancia);
 	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d AutoValor= %g \n',probabilidad,indice,iter,autoValor);
 	plot(errores,";Error vs Iteracion X;");
 	print('ErrorVsIteracionPotencia-X','-dpng');
-
-	disp("POTENCIA OLD X: ");
-	G = ObtenerMatrizDeTransicion(X);
-	[autoVector,autoValor,errores,iter] = Potencia(G, maxIteraciones,tolerancia);
-	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
-	
 
 	disp("ARNOLDI X: ");
 	[autoVector,autoValor,errores,iter] = Sistema(X, maxIteraciones,alpha,tolerancia);
 	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d AutoValor= %g \n',probabilidad,indice,iter,autoValor);
 	plot(errores,";Error vs Iteracion X;");
 	print('ErrorVsIteracionArnoldi-X','-dpng');
 
@@ -42,23 +35,18 @@ function Comparacion()
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
 
 
+	disp("################### HARVARD ########################\n\n");
 	disp("POTENCIA HARVARD: ");
-	[autoVector,autoValor,errores,iter] = Potencia2(HARV, maxIteraciones,alpha,tolerancia);
+	[autoVector,autoValor,errores,iter] = Potencia(HARV, maxIteraciones,tolerancia);
 	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d AutoValor= %g \n',probabilidad,indice,iter,autoValor);
 	plot(errores,";Error vs Iteracion POTENCIA;");
 	print('ErrorVsIteracionPotencia-Harvard','-dpng');
-
-	disp("POTENCIA OLD HARVARD: ");
-	G = ObtenerMatrizDeTransicion(HARV);
-	[autoVector,autoValor,errores,iter] = Potencia(G, maxIteraciones,tolerancia);
-	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
 
 	disp("ARNOLDI HARVARD: ");
 	[autoVector,autoValor,errores,iter] = Sistema(HARV, maxIteraciones,alpha,tolerancia);
 	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d AutoValor= %g \n',probabilidad,indice,iter,autoValor);
 	plot(errores,";Error vs Iteracion ARNOLDI;");
 	print('ErrorVsIteracionArnoldi-Harvard','-dpng');
 
@@ -68,24 +56,19 @@ function Comparacion()
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
 
 
+	disp("################### STANFORD ########################\n\n");
 	disp("POTENCIA STANFORD: ");
-	[autoVector,autoValor,errores,iter] = Potencia2(STANFORD, maxIteraciones,alpha,tolerancia);
+	[autoVector,autoValor,errores,iter] = Potencia(STANFORD, maxIteraciones,tolerancia);
 	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d AutoValor= %g \n',probabilidad,indice,iter,autoValor);
 	plot(errores,";Error vs Iteracion POTENCIA;");
 	print('ErrorVsIteracionPotencia-Stanford','-dpng');
-
-	disp("POTENCIA OLD STANFORD: ");
-	G = ObtenerMatrizDeTransicion(STANFORD);
-	[autoVector,autoValor,errores,iter] = Potencia(G, maxIteraciones,tolerancia);
-	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
 
 
 	disp("ARNOLDI STANFORD: ");
 	[autoVector,autoValor,errores,iter] = Sistema(STANFORD, maxIteraciones,alpha,tolerancia);
 	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d AutoValor= %g \n',probabilidad,indice,iter,autoValor);
 	plot(errores,";Error vs Iteracion ARNOLDI;");
 	print('ErrorVsIteracionArnoldi-Stanford','-dpng');
 

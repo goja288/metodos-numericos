@@ -27,7 +27,7 @@ function [autoVector,autoValor,errores,iter] = Sistema(A,max_bases,alpha,tol)
 	if (eigvec(1)<0) eigvec = abs(eigvec); end
 
 	autoVector = eigvec; 
-	autoValor = eigval;
+	autoValor = sum(autoVector);
 	iter = I;
 endfunction
 
