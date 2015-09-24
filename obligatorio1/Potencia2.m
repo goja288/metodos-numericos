@@ -5,10 +5,10 @@ function Potencia2()
 load matrices/wb-cs-stanford.mat;
 G = Problem.A;
 
-load matrices/harvard500.mat;
-G = G' - diag(diag(G));
+%load matrices/harvard500.mat;
+%G = G' - diag(diag(G));
 
-G = [0 0 1 0; 1 0 1 0; 0 0 0 1; 1 0 1 0];
+%G = [0 0 1 0; 1 0 1 0; 0 0 0 1; 1 0 1 0];
 
 [n,n] = size(G);
 d = zeros(1, n);
