@@ -26,48 +26,29 @@ endfunction
 
 %%%% 
 
-function [x,iter] = GaussSeidel(A,b,es,maxit)
+function [x,iter] = GaussSeidel(A,b,umbral, iterMax)
 
-	% x = GaussSeidel(A,b):
-	%   Gauss Seidel method.
-	% input:
-	%   A = coefficient matrix
-	%   b = right hand side vector
-	%   es = (optional) stop criterion (%) (default = 0.00001)
-	%   maxit = (optional) max iterations (default = 50)
-	% output:
-	%   x = solution vector
+%Inicializacion de las variables
+n = length(A);
+LUD = zeros (n);
+x = zeros (n, 1);
+error = ones (1, n);
 
-	if nargin<4, maxit=50; end
-	if nargin<3, es=0.00001; end
-	[m,n] = size(A);
-	if m~=n, error('Matrix A must be square'); end
-	C = A;
-	for i = 1:n
-		C(i,i) = 0;
-		x(i) = 0;
-	end
-	x = x';
-	for i = 1:n
-		C(i,1:n) = C(i,1:n)/A(i,i);
-	end
-	for i = 1:n
-		d(i) = b(i)/A(i,i);
-	end
+%Genero una matriz con los valores de la Matriz A pero sin su diagonal.
+LUD = A - diag(diag(A));
+iter = 0;
 
-	iter = 0;
-	while (1)
-	  xold = x;
-	  for i = 1:n
-		x(i) = d(i)-C(i,:)*x;
-		if x(i) ~= 0
-		  ea(i) = abs((x(i) - xold(i))/x(i)) * 100;
-		end
-	  end
-	  iter = iter+1;
-	  if max(ea)<=es || iter >= maxit,
-		 break,
-	  end
-	end
+%iterMax=70; % control de iteraciones
+%umbral= 10^-10;  % umbral de parada
+
+while (iter < iterMax && max(error) >= umbral)
+  xAnterior = x;
+  for i = 1:n
+    x(i) = (b(i)-LUD(i,:)*xAnterior) / A(i,i); 
+	error(i) = abs(xAnterior(i) - x(i)); % calculo el error por item del vector.
+  end
+  iter ++;
+ 
+end
 endfunction
 
