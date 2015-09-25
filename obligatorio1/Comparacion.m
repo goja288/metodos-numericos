@@ -36,6 +36,9 @@ function Comparacion()
 	[autoVector,iter] = pagerankpow(X);
 	[probabilidad indice] = max(autoVector);
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	sorted = sort(autoVector,"descend");
+	plot(sorted,";PageRank GoldStandard X;");
+	print('PageRank-GoldStandard-X','-dpng');
 
 	disp("GAUSS-SEIDEL");
 	[autoVector, iter] = PageRankMN(X, maxIteraciones,alpha,tolerancia);
