@@ -1,17 +1,7 @@
-function PageRankMN()
+function [autoVector, iter] = PageRankMN(G, maxIteraciones,p,tolerancia)
 
-	p = 0.85; % Probabilidad p
-
-	load matrices/harvard500.mat
-	G = G - diag(diag(G));
-	
-	%G = [0 0 1 0; 1 0 1 0; 0 1 0 0; 1 0 1 0];
-	%G = [1 -1 4; 3 2 -1; 2 1 -1];
-	%G =  [0 0 0 1 0 1; 1 0 0 0 0 0; 0 1 0 0 0 0; 0 1 1 0 0 0; 0 0 1 0 0 0; 1 0 1 0 0 0]
-	
 	[n,n] = size(G);
 	
-	%I = speye(n,n); % creo la matriz identidad como esparsa
 	I = eye(n,n); % creo la matriz identidad
 	
 	% Quiero obtener la matriz D
@@ -24,23 +14,19 @@ function PageRankMN()
 		end
 	end	
 	
-	
-	
 	A = (I - p*(G*D));
-	
-	b = ones(n,1);
-	
-	
-	x = GaussSeidel(A,b);
-	x = x/sum(x);
-	sum(x)
-	max(x)
+	b = ones(n,1); 
+		
+	[x,iteracionGS] = GaussSeidel(A,b,tolerancia,maxIteraciones);
+
+	autoVector = x/sum(x); % Normalizado
+	iter = iteracionGS; % Cuantas iteraciones llevo encontrar 
 	
 endfunction
 
 %%%% 
 
-function x = GaussSeidel(A,b,es,maxit)
+function [x,iter] = GaussSeidel(A,b,es,maxit)
 
 	% x = GaussSeidel(A,b):
 	%   Gauss Seidel method.
@@ -79,7 +65,7 @@ function x = GaussSeidel(A,b,es,maxit)
 		end
 	  end
 	  iter = iter+1;
-	  if max(ea)<=es | iter >= maxit,
+	  if max(ea)<=es || iter >= maxit,
 		 break,
 	  end
 	end

@@ -10,7 +10,7 @@ function Comparacion()
 	Y = createMatrix(500);
 	Y = Y - diag(diag(Y));
 
-	disp("POTENCIA vs ARNOLDI\n");
+	disp("POTENCIA vs ARNOLDI vs GAUSS-SEIDEL\n");
 	#set(0, 'defaultfigurevisible', 'off');
 
 	maxIteraciones = 20;
@@ -35,6 +35,11 @@ function Comparacion()
 	disp("PAGERANKPOW X: ");
 	[autoVector,iter] = pagerankpow(X);
 	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+
+	disp("GAUSS-SEIDEL");
+	[autoVector, iter] = PageRankMN(X, maxIteraciones,alpha,tolerancia);
+	[probabilidad indice] = max(autoVector);
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
 
 	disp("################### Y ########################\n\n");
@@ -55,8 +60,12 @@ function Comparacion()
 	disp("PAGERANKPOW Y: ");
 	[autoVector,iter] = pagerankpow(Y);
 	[probabilidad indice] = max(autoVector);
-	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
 
+	disp("GAUSS-SEIDEL");
+	[autoVector, iter] = PageRankMN(Y, maxIteraciones,alpha,tolerancia);
+	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
 
 
 	disp("################### HARVARD ########################\n\n");
@@ -77,6 +86,11 @@ function Comparacion()
 	disp("PAGERANKPOW HARVARD: ");
 	[autoVector,iter] = pagerankpow(HARV);
 	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	
+	disp("GAUSS-SEIDEL");
+	[autoVector, iter] = PageRankMN(HARV, maxIteraciones,alpha,tolerancia);
+	[probabilidad indice] = max(autoVector);
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
 
 
@@ -88,7 +102,6 @@ function Comparacion()
 	#plot(errores,";Error vs Iteracion POTENCIA;");
 	#print('ErrorVsIteracionPotencia-Stanford','-dpng');
 
-
 	disp("ARNOLDI STANFORD: ");
 	[autoVector,autoValor,errores,iter] = Sistema(STANFORD, maxIteraciones,alpha,tolerancia);
 	[probabilidad indice] = max(autoVector);
@@ -99,7 +112,13 @@ function Comparacion()
 	disp("PAGERANKPOW STANFORD: ");
 	[autoVector,iter] = pagerankpow(STANFORD);
 	[probabilidad indice] = max(autoVector);
+	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n',probabilidad,indice,iter);
+	
+	disp("GAUSS-SEIDEL");
+	[autoVector, iter] = PageRankMN(STANFORD, maxIteraciones,alpha,tolerancia);
+	[probabilidad indice] = max(autoVector);
 	fprintf(1,'Probabilidad: %g Indice= %d Iteracion= %d \n\n\n',probabilidad,indice,iter);
+
 
 endfunction
 
