@@ -1,5 +1,5 @@
 %-----------------------------
-% Metodo Predictor Correctos 
+% Metodo Predictor Corrector
 %-----------------------------
 
 % gamma -> tasa de recuperacion
