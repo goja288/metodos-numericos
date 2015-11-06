@@ -1,25 +1,29 @@
 %-----------------------------
 % Metodo Euler Hacia Adelante 
 %-----------------------------
-
+%
+% Ejemplo de ejecucion: 
+%	[resS,resI,resR,errorGlobal] = SIREuler(4.3,8.0,.99,.01,0,0.01,400);
+%
+% resS -> vector resultado S
+% resI -> vector resultado I
+% resR -> vector resultado R
+% errorGlobal -> vector de errores
+%
 % gamma -> tasa de recuperacion
 % beta -> tasa de contagio
 % S -> poblacion inicial de susceptibles
 % I -> poblacion inicial de infectados
 % R -> poblacion inicial de removidos
-% h -> paso 
-function [res, errorGlobal] = SIREuler(gamma,beta,S,I,R,h)
+% h -> paso
+% cantIteraciones -> cantidad de iteraciones 
+function [resS,resI,resR, errorGlobal] = SIREuler(gamma,beta,S,I,R,h,cantIteraciones)
 
 	N = S + I + R;
 
-	cantIteraciones = 400;
-
-	iter = 0;
-	
-	s(1) = .99;
-	i(1) = .01
-	r(1) = 0;
-
+	s(1) = S/N;
+	i(1) = I/N;
+	r(1) = R/N;
 
 	for iter=2:cantIteraciones
 		
@@ -29,23 +33,20 @@ function [res, errorGlobal] = SIREuler(gamma,beta,S,I,R,h)
 
 		r(iter) = r(iter-1) + (gamma * i(iter-1)) * h;
 
-
 	end
-
 
 	pcol1 = [255,0,0]/255; % red
 	pcol2 = [0,255,0]/255; % red
 	pcol3 = [0,0,255]/255; % red
-
-
-	%plot3(s,i,r,'Color',pcol)
-
 	
 	plot(s/N,'Color',pcol1); hold on;
 	plot(i/N,'Color',pcol2); hold on;
 	plot(r/N,'Color',pcol3); 
 
-	res = 20;
-	errorGlobal = 21;
+	resS = s/N;
+	resI = i/N;
+	resR = r/N;
+
+	errorGlobal = 0;
 
 endfunction
