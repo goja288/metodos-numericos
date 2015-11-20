@@ -38,7 +38,7 @@ function [resS_1, resI_1, resR_1] = SIRPC(gamma,beta,S,I,R,h,cantIteraciones)
 		r(iter) = r(iter-1) + (h/2) * ( (gamma * i(iter-1)) + (gamma * ip) );
 
 	end
-
+	
 	resS_1 = s;
 	resI_1 = i;
 	resR_1 = r;
