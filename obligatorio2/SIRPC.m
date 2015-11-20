@@ -2,7 +2,7 @@
 % Metodo Predictor Corrector (Heun)
 %-----------------------------
 %
-% Ejemplo de ejecucion: 
+% Ejemplo de ejecucion:
 %	[resS,resI,resR] = SIRPC(4.3,8.0,.99,.01,0,0.01,400);
 %
 % resS -> vector resultado S
@@ -15,8 +15,8 @@
 % S -> poblacion inicial de susceptibles
 % I -> poblacion inicial de infectados
 % R -> poblacion inicial de removidos
-% h -> paso 
-% cantIteraciones -> cantidad de iteraciones 
+% h -> paso
+% cantIteraciones -> cantidad de iteraciones
 function [resS_1, resI_1, resR_1] = SIRPC(gamma,beta,S,I,R,h,cantIteraciones)
 
 	N = S + I + R;
@@ -26,7 +26,7 @@ function [resS_1, resI_1, resR_1] = SIRPC(gamma,beta,S,I,R,h,cantIteraciones)
 	r(1) = R;
 
 	for iter=2:cantIteraciones
-		
+
 		% Predictor
 		sp = s(iter-1) + (-1 * beta * s(iter-1) * i(iter-1)) * h;
 		ip = i(iter-1) + (beta * s(iter-1) * i(iter-1) - gamma * i(iter-1)) * h;
@@ -38,16 +38,6 @@ function [resS_1, resI_1, resR_1] = SIRPC(gamma,beta,S,I,R,h,cantIteraciones)
 		r(iter) = r(iter-1) + (h/2) * ( (gamma * i(iter-1)) + (gamma * ip) );
 
 	end
-
-	pcol1 = [255,0,0]/255; % red
-	pcol2 = [0,255,0]/255; % red
-	pcol3 = [0,0,255]/255; % red
-	
-	figure
-	plot(s,'Color',pcol1); hold on;
-	plot(i,'Color',pcol2); hold on;
-	plot(r,'Color',pcol3); 
-	title('Predictor-Corrector')
 
 	resS_1 = s;
 	resI_1 = i;
