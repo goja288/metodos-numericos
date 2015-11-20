@@ -3,12 +3,12 @@
 %-----------------------------
 %
 % Ejemplo de ejecucion: 
-%	[resS,resI,resR,errorGlobal] = SIREuler(4.3,8.0,.99,.01,0,0.01,400);
+%	[resS,resI,resR] = SIREuler(4.3,8.0,.99,.01,0,0.01,400);
 %
 % resS -> vector resultado S
 % resI -> vector resultado I
 % resR -> vector resultado R
-% errorGlobal -> vector de errores
+
 %
 % gamma -> tasa de recuperacion
 % beta -> tasa de contagio
@@ -17,13 +17,13 @@
 % R -> poblacion inicial de removidos
 % h -> paso
 % cantIteraciones -> cantidad de iteraciones 
-function [resS,resI,resR, errorGlobal] = SIREuler(gamma,beta,S,I,R,h,cantIteraciones)
+function [resS,resI,resR] = SIREuler(gamma,beta,S,I,R,h,cantIteraciones)
 
 	N = S + I + R;
 
-	s(1) = S/N;
-	i(1) = I/N;
-	r(1) = R/N;
+	s(1) = S;
+	i(1) = I;
+	r(1) = R;
 
 	for iter=2:cantIteraciones
 		
@@ -36,17 +36,17 @@ function [resS,resI,resR, errorGlobal] = SIREuler(gamma,beta,S,I,R,h,cantIteraci
 	end
 
 	pcol1 = [255,0,0]/255; % red
-	pcol2 = [0,255,0]/255; % red
-	pcol3 = [0,0,255]/255; % red
+	pcol2 = [0,255,0]/255; % green
+	pcol3 = [0,0,255]/255; % blue
 	
-	plot(s/N,'Color',pcol1); hold on;
-	plot(i/N,'Color',pcol2); hold on;
-	plot(r/N,'Color',pcol3); 
+	figure
+	title('Euler')
+	plot(s,'Color',pcol1); hold on;
+	plot(i,'Color',pcol2); hold on;
+	plot(r,'Color',pcol3); 
 
-	resS = s/N;
-	resI = i/N;
-	resR = r/N;
-
-	errorGlobal = 0;
+	resS = s;
+	resI = i;
+	resR = r;
 
 endfunction

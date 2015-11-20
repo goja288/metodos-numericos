@@ -3,12 +3,12 @@
 %-----------------------------
 %
 % Ejemplo de ejecucion: 
-%	[resS,resI,resR,errorGlobal] = SIRPC(4.3,8.0,.99,.01,0,0.01,400);
+%	[resS,resI,resR] = SIRPC(4.3,8.0,.99,.01,0,0.01,400);
 %
 % resS -> vector resultado S
 % resI -> vector resultado I
 % resR -> vector resultado R
-% errorGlobal -> vector de errores
+
 %
 % gamma -> tasa de recuperacion
 % beta -> tasa de contagio
@@ -17,13 +17,13 @@
 % R -> poblacion inicial de removidos
 % h -> paso 
 % cantIteraciones -> cantidad de iteraciones 
-function [resS_1, resI_1, resR_1, errorGlobal] = SIRPC(gamma,beta,S,I,R,h,cantIteraciones)
+function [resS_1, resI_1, resR_1] = SIRPC(gamma,beta,S,I,R,h,cantIteraciones)
 
 	N = S + I + R;
 
-	s(1) = S/N;
-	i(1) = I/N;
-	r(1) = R/N;
+	s(1) = S;
+	i(1) = I;
+	r(1) = R;
 
 	for iter=2:cantIteraciones
 		
@@ -43,14 +43,14 @@ function [resS_1, resI_1, resR_1, errorGlobal] = SIRPC(gamma,beta,S,I,R,h,cantIt
 	pcol2 = [0,255,0]/255; % red
 	pcol3 = [0,0,255]/255; % red
 	
-	plot(s/N,'Color',pcol1); hold on;
-	plot(i/N,'Color',pcol2); hold on;
-	plot(r/N,'Color',pcol3); 
+	figure
+	plot(s,'Color',pcol1); hold on;
+	plot(i,'Color',pcol2); hold on;
+	plot(r,'Color',pcol3); 
+	title('Predictor-Corrector')
 
-	resS_1 = s/N;
-	resI_1 = i/N;
-	resR_1 = r/N;
-
-	errorGlobal = 0;
+	resS_1 = s;
+	resI_1 = i;
+	resR_1 = r;
 
 end
