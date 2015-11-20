@@ -5,8 +5,8 @@ function script_variacion_parametros()
 
 cant = 100;
 iters = 400 ;
-%cc=hsv(cant);
-cc=hot(cant);
+cc=hsv(cant);
+%cc=hot(cant);
 S = zeros(cant,iters);
 I = zeros(cant,iters);
 R = zeros(cant,iters);
