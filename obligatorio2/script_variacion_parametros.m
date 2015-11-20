@@ -1,10 +1,12 @@
+function script_variacion_parametros()
+
 % prueba de como evoluciona el sistema variando los parametros iniciales
 % usa el colormap hsv, This colormap begins with red, changes through yellow, green, cyan, blue, and magenta.
 
 cant = 100;
 iters = 400 ;
-cc=hsv(cant);
-
+%cc=hsv(cant);
+cc=hot(cant);
 S = zeros(cant,iters);
 I = zeros(cant,iters);
 R = zeros(cant,iters);
